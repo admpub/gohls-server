@@ -23,6 +23,7 @@ func (*serveCmd) Usage() string {
 `
 }
 
+// gohls serve -port 8082 ./videoDir/
 func (p *serveCmd) SetFlags(f *flag.FlagSet) {
 	f.IntVar(&p.port, "port", 8080, "Listening port")
 }
