@@ -3,8 +3,9 @@ package main
 import (
 	"context"
 	"flag"
+
+	"github.com/admpub/gohls-server/hls"
 	"github.com/google/subcommands"
-	"github.com/shimberger/gohls/hls"
 )
 
 type clearCmd struct{}

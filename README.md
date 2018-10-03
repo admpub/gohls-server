@@ -12,9 +12,9 @@ Simple server that exposes a directory for video streaming via HTTP Live Streami
 
 ## Running it
 
-*Important*: You need the ffmpeg and ffrpobe binaries in your PATH. The server will not start without them. You can find builds most operating systems at https://ffmpeg.org/download.html.
+*Important*: You need the ffmpeg and ffprobe binaries in your PATH. The server will not start without them. You can find builds most operating systems at https://ffmpeg.org/download.html.
 
-1. Download the binary for your operating system from the releases page (https://github.com/shimberger/gohls/releases)
+1. Download the binary for your operating system from the releases page (https://github.com/admpub/gohls-server/releases)
 2. Execute the command `gohls serve <path to videos>` e.g. `gohls serve ~/Documents/Videos` to serve the videos located in `~/Documents/Videos`.
 3. Visit the URL http://localhost:8080 to access the web interface
 
@@ -26,7 +26,7 @@ To make the server listen on another port just use the `serve` command with `--p
 
 ## Developing it
 
-Just do a `go get github.com/shimberger/gohls/...` in your GOPATH. Then change into the project directory and run the development server by executing `./scripts/run_dev` (sorry Windows users). You need gulp & npm to build the frontend.
+Just do a `go get github.com/admpub/gohls-server/...` in your GOPATH. Then change into the project directory and run the development server by executing `./scripts/run_dev` (sorry Windows users). You need gulp & npm to build the frontend.
 
 ## License
 

@@ -1,8 +1,12 @@
 .DS_Store
 .sass-cache
+.vscode
+# Build artifacts
 /build
+/dist
+/ui/src/build
+
 node_modules
 videos
-buildinfo.go
 bindata.go
 LOCAL_NOTES.txt

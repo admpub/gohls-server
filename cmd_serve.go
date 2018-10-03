@@ -4,9 +4,10 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/google/subcommands"
-	"github.com/shimberger/gohls/hls"
 	"net/http"
+
+	"github.com/admpub/gohls-server/hls"
+	"github.com/google/subcommands"
 )
 
 type serveCmd struct {
