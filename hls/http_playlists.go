@@ -2,11 +2,12 @@ package hls
 
 import (
 	"fmt"
-	log "github.com/Sirupsen/logrus"
 	"net/http"
 	"net/url"
-	"path"
+	"path/filepath"
 	"regexp"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 var playlistRegexp = regexp.MustCompile(`^(320|480|720|1080)/(.*)$`)
@@ -35,7 +36,7 @@ func (s *PlaylistHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Wrong path format", 400)
 		return
 	}
-	file := path.Join(s.root, matches[2])
+	file := filepath.Join(s.root, matches[2])
 	res := matches[1]
 	log.Debugf("Playlist request: %v", matches)
 
@@ -45,7 +46,8 @@ func (s *PlaylistHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	duration := vinfo.Duration
-	baseurl := fmt.Sprintf("http://%v/api", r.Host)
+
+	baseurl := fmt.Sprintf("%s//%v/api", r.URL.Scheme, r.Host)
 
 	id, err := urlEncoded(matches[2])
 	if err != nil {

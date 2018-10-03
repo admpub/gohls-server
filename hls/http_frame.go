@@ -2,10 +2,11 @@ package hls
 
 import (
 	"fmt"
-	log "github.com/Sirupsen/logrus"
 	"net/http"
-	"path"
+	"path/filepath"
 	"strconv"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 type FrameHandler struct {
@@ -23,7 +24,7 @@ func (s *FrameHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if tint, err := strconv.Atoi(t); err == nil {
 		time = tint
 	}
-	path := path.Join(s.root, r.URL.Path)
+	path := filepath.Join(s.root, r.URL.Path)
 	args := []string{
 		"-timelimit", "15",
 		"-loglevel", "error",

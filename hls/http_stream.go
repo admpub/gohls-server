@@ -1,12 +1,13 @@
 package hls
 
 import (
-	log "github.com/Sirupsen/logrus"
 	"net/http"
-	"path"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"time"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 var streamRegexp = regexp.MustCompile(`^(.*)/(320|480|720|1080)/([0-9]+)\.ts$`)
@@ -30,7 +31,7 @@ func (s *StreamHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	res, _ := strconv.ParseInt(matches[2], 0, 64)
 	segment, _ := strconv.ParseInt(matches[3], 0, 64)
-	file := path.Join(s.root, matches[1])
+	file := filepath.Join(s.root, matches[1])
 	er := NewEncodingRequest(file, segment, res)
 	s.encoder.Encode(*er)
 

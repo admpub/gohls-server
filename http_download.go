@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"net/url"
 	"path/filepath"
 )
 
@@ -14,6 +15,8 @@ func NewDownloadHandler(root string) *downloadHandler {
 }
 
 func (s *downloadHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Disposition", "attachment; filename='"+filepath.Base(r.URL.Path)+"'")
+	filename := url.QueryEscape(filepath.Base(r.URL.Path))
+	w.Header().Set("Content-Disposition", "attachment; filename="+filename+"; filename*=UTF-8''"+filename)
+
 	http.ServeFile(w, r, filepath.Join(s.dir, r.URL.Path))
 }

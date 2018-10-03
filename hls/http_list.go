@@ -2,11 +2,13 @@ package hls
 
 import (
 	"fmt"
-	log "github.com/Sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"path"
+	"path/filepath"
 	"strings"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 type ListResponseVideo struct {
@@ -38,14 +40,14 @@ func (s *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	videos := make([]*ListResponseVideo, 0)
 	folders := make([]*ListResponseFolder, 0)
 	response := &ListResponse{nil, folders, videos}
-	files, rerr := ioutil.ReadDir(path.Join(s.path, r.URL.Path))
+	files, rerr := ioutil.ReadDir(filepath.Join(s.path, r.URL.Path))
 	if rerr != nil {
 		response.Error = fmt.Errorf("Error reading path: %v", r.URL.Path)
 		ServeJson(500, response, w)
 		return
 	}
 	for _, f := range files {
-		filePath := path.Join(s.path, r.URL.Path, f.Name())
+		filePath := filepath.Join(s.path, r.URL.Path, f.Name())
 		if strings.HasPrefix(f.Name(), ".") || strings.HasPrefix(f.Name(), "$") {
 			continue
 		}

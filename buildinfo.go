@@ -2,6 +2,6 @@ package main
 
 var (
 	VERSION    = "test"
-	COMMIT     = "100b1bfaab7c5a579836c7f08b457fb9b56cdfbf"
-	BUILD_TIME = "1538546521"
+	COMMIT     = "d8add2a8c5cc19f438de7d73c822e7aacd82c33a"
+	BUILD_TIME = "1538548000"
 )
