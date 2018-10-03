@@ -1,5 +1,7 @@
 package main
 
-const VERSION = "##VERSION##"
-const COMMIT = "##COMMIT##"
-const BUILD_TIME = "##BUILD_TIME##"
+var (
+	VERSION    = "##VERSION##"
+	COMMIT     = "##COMMIT##"
+	BUILD_TIME = "##BUILD_TIME##"
+)
