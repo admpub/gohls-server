@@ -3,15 +3,38 @@ package hls
 import (
 	"encoding/json"
 	"fmt"
-	log "github.com/Sirupsen/logrus"
 	"os"
 	"os/exec"
 	"strconv"
 	"strings"
 	"time"
+
+	log "github.com/Sirupsen/logrus"
 )
 
-var videoSuffixes = []string{".mp4", ".avi", ".mkv", ".flv", ".wmv", ".mov", ".mpg"}
+var videoSuffixes = []string{".mp4", ".avi", ".mkv", ".flv", ".wmv", ".mov", ".mpg", ".rmvb"}
+
+func AddVideoSuffix(suffixes ...string) {
+	for _, suffix := range suffixes {
+		suffix = strings.TrimSpace(suffix)
+		if len(suffix) == 0 {
+			continue
+		}
+		if !strings.HasPrefix(suffix, `.`) {
+			suffix = `.` + suffix
+		}
+		var exists bool
+		for _, vs := range videoSuffixes {
+			if suffix == vs {
+				exists = true
+				break
+			}
+		}
+		if !exists {
+			videoSuffixes = append(videoSuffixes, suffix)
+		}
+	}
+}
 
 // TODO make mutex
 var videoInfos = make(map[string]*VideoInfo)
@@ -23,6 +46,7 @@ type VideoInfo struct {
 }
 
 func FilenameLooksLikeVideo(name string) bool {
+	name = strings.ToLower(name)
 	for _, suffix := range videoSuffixes {
 		if strings.HasSuffix(name, suffix) {
 			return true

@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/admpub/gohls-server/hls"
 	"github.com/google/subcommands"
@@ -13,6 +14,7 @@ import (
 type serveCmd struct {
 	port    int
 	homeDir string
+	suffix  string
 }
 
 func (*serveCmd) Name() string     { return "serve" }
@@ -26,10 +28,13 @@ func (*serveCmd) Usage() string {
 // gohls serve -port 8082 ./videoDir/
 func (p *serveCmd) SetFlags(f *flag.FlagSet) {
 	f.IntVar(&p.port, "port", 8080, "Listening port")
+	f.StringVar(&p.suffix, "suffix", "", "Video suffix (exmple: .rmvb,.dat)")
 }
 
 func (p *serveCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-
+	if len(p.suffix) > 0 {
+		hls.AddVideoSuffix(strings.Split(p.suffix, `,`)...)
+	}
 	// Generate variables and paths
 	var port = p.port
 	var videoDir = setVideoDir(f)

@@ -24,7 +24,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path"
+	"path/filepath"
 	"sort"
 )
 
@@ -353,7 +353,7 @@ func Alias(alias string, cmd Command) Command {
 var DefaultCommander *Commander
 
 func init() {
-	DefaultCommander = NewCommander(flag.CommandLine, path.Base(os.Args[0]))
+	DefaultCommander = NewCommander(flag.CommandLine, filepath.Base(os.Args[0]))
 }
 
 // Register adds a subcommand to the supported subcommands in the
