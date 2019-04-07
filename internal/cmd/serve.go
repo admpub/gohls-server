@@ -2,17 +2,21 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/shimberger/gohls/internal/api"
-	"github.com/shimberger/gohls/internal/config"
-	"github.com/shimberger/gohls/internal/hls"
+	"net/http"
+	"regexp"
+
+	"github.com/admpub/gohls-server/internal/api"
+	"github.com/admpub/gohls-server/internal/config"
+	"github.com/admpub/gohls-server/internal/hls"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"net/http"
 )
 
 var (
 	listen string
 )
+
+var reNumber = regexp.MustCompile(`^[0-9]+$`)
 
 func init() {
 	rootCmd.AddCommand(serveCmd)
@@ -32,6 +36,10 @@ var serveCmd = &cobra.Command{
 		}
 
 		api.Setup(config)
+
+		if reNumber.MatchString(listen) {
+			listen = `:` + listen
+		}
 
 		// Dump information to user
 		fmt.Printf("Path to ffmpeg executable: %v\n", hls.FFMPEGPath)

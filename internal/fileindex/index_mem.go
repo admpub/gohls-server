@@ -3,11 +3,12 @@ package fileindex
 import (
 	"crypto/sha1"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"os"
 	"path"
 	"path/filepath"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func NewMemIndex(root string, id string, filter Filter) (Index, error) {
@@ -188,7 +189,7 @@ func newMemIndexData() *memIndexData {
 }
 
 func (d *memIndexData) add(e *memEntry) {
-	log.Tracef("Adding index entry %v", e.Path())
+	log.Infof("Adding index entry %v", e.Path())
 	d.entries[e.Id()] = e
 	d.children[e.ParentId()] = append(d.children[e.ParentId()], e)
 }

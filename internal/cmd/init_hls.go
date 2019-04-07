@@ -1,13 +1,14 @@
 package cmd
 
 import (
-	homedir "github.com/mitchellh/go-homedir"
-	"github.com/shimberger/gohls/internal/hls"
-	log "github.com/sirupsen/logrus"
 	"os"
 	"os/exec"
 	"path"
 	"strconv"
+
+	"github.com/admpub/gohls-server/internal/hls"
+	homedir "github.com/mitchellh/go-homedir"
+	log "github.com/sirupsen/logrus"
 )
 
 func init_hls() {
@@ -17,7 +18,7 @@ func init_hls() {
 		log.SetLevel(log.DebugLevel)
 	}
 	if _, err := strconv.ParseBool(os.Getenv("TRACE")); err == nil {
-		log.SetLevel(log.TraceLevel)
+		//log.SetLevel(log.TraceLevel)
 	}
 
 	// Find ffmpeg

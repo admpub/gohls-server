@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 var VideoSuffixes = []string{".mp4", ".rmvb", ".avi", ".mkv", ".flv", ".wmv", ".mov", ".mpg"}
@@ -24,14 +24,14 @@ func AddVideoSuffix(suffixes ...string) {
 			suffix = `.` + suffix
 		}
 		var exists bool
-		for _, vs := range videoSuffixes {
+		for _, vs := range VideoSuffixes {
 			if suffix == vs {
 				exists = true
 				break
 			}
 		}
 		if !exists {
-			videoSuffixes = append(videoSuffixes, suffix)
+			VideoSuffixes = append(VideoSuffixes, suffix)
 		}
 	}
 }

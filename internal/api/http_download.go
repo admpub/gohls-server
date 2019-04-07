@@ -2,13 +2,14 @@ package api
 
 import (
 	"fmt"
-	"github.com/shimberger/gohls/internal/fileindex"
-	"github.com/shimberger/gohls/internal/hls"
-	log "github.com/sirupsen/logrus"
 	"net/http"
 	"os/exec"
 	"path/filepath"
 	"strings"
+
+	"github.com/admpub/gohls-server/internal/fileindex"
+	"github.com/admpub/gohls-server/internal/hls"
+	log "github.com/sirupsen/logrus"
 )
 
 type downloadHandler struct {

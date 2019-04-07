@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/shimberger/gohls/internal/config"
-	"github.com/shimberger/gohls/internal/hls"
+	"github.com/admpub/gohls-server/internal/config"
+	"github.com/admpub/gohls-server/internal/hls"
 	"net/http"
 	"path"
 )

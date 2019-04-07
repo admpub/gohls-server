@@ -12,7 +12,7 @@ Simple server that exposes a directory for video streaming via HTTP Live Streami
 
 ### 1. Download the binary for your operating system
 
-You can find the latest release on the releases page [https://github.com/shimberger/gohls/releases](https://github.com/shimberger/gohls/releases) or just download a current snapshot:
+You can find the latest release on the releases page [https://github.com/admpub/gohls-server/releases](https://github.com/admpub/gohls-server/releases) or just download a current snapshot:
 
 - [Windows (64 bit)](https://s3.amazonaws.com/gohls/gohls-windows-amd64-snapshot.tar.gz)
 - [Linux (64 bit)](https://s3.amazonaws.com/gohls/gohls-linux-amd64-snapshot.tar.gz)
@@ -39,11 +39,6 @@ The configuration is stored in JSON format. Just call the file `gohls-config.jso
 
 This will configure which directories on your system will be made available for streaming. See the screenshot for details:
 
-*Important*: You need the ffmpeg and ffprobe binaries in your PATH. The server will not start without them. You can find builds most operating systems at https://ffmpeg.org/download.html.
-
-1. Download the binary for your operating system from the releases page (https://github.com/admpub/gohls-server/releases)
-2. Execute the command `gohls serve <path to videos>` e.g. `gohls serve ~/Documents/Videos` to serve the videos located in `~/Documents/Videos`.
-3. Visit the URL http://localhost:8080 to access the web interface
 ![](https://s3-eu-west-1.amazonaws.com/captured-krxvuizy1557lsmzs8mvzdj4/yd4ei-20181024-24215053.png)
 
 ### 3. Run the server

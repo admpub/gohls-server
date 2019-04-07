@@ -1,4 +1,4 @@
-module github.com/shimberger/gohls
+module github.com/admpub/gohls-server
 
 require (
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
