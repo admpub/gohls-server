@@ -9,3 +9,4 @@ videos
 bindata.go
 LOCAL_NOTES.txt
 gohls-config.json
+tower-app-*
