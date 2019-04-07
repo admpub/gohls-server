@@ -3,10 +3,9 @@
 .vscode
 # Build artifacts
 /build
-/dist
-/ui/src/build
-
+ui/src/build
 node_modules
 videos
 bindata.go
 LOCAL_NOTES.txt
+gohls-config.json
