@@ -1,11 +1,12 @@
 package hls
 
 import (
-	"github.com/admpub/gohls-server/internal/fileindex"
-	log "github.com/sirupsen/logrus"
 	"net/http"
 	"path"
 	"strings"
+
+	"github.com/admpub/gohls-server/internal/fileindex"
+	log "github.com/sirupsen/logrus"
 )
 
 type ListResponseVideo struct {
@@ -48,7 +49,7 @@ func (s *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path != "" {
 		entry, err := s.idx.Get(r.URL.Path)
-		if err != nil {
+		if err != nil || entry == nil {
 			ServeJson(404, err, w)
 			return
 		}

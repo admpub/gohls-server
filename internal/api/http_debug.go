@@ -1,8 +1,9 @@
 package api
 
 import (
-	log "github.com/sirupsen/logrus"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type DebugHandlerWrapper struct {
@@ -15,5 +16,10 @@ func NewDebugHandlerWrapper(handler http.Handler) *DebugHandlerWrapper {
 
 func (s *DebugHandlerWrapper) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Debugf("HTTP %v %v", r.Method, r.URL.Path)
+	defer func() {
+		if e := recover(); e != nil {
+			log.Error(e)
+		}
+	}()
 	s.handler.ServeHTTP(w, r)
 }
