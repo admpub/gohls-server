@@ -36,10 +36,12 @@ func ConvertToMP4(videoFile string, outputFile string) error {
 		return errors.New("Cannot find " + FFMPEGPath + " executable in path")
 	}
 	size := 1
-	if _, err := exec.LookPath(ComSkipPath); err != nil {
-		fmt.Println("Cannot find " + ComSkipPath + " executable in path")
-	} else {
-		size++
+	if len(ComSkipINI) > 0 {
+		if _, err := exec.LookPath(ComSkipPath); err != nil {
+			fmt.Println("Cannot find " + ComSkipPath + " executable in path")
+		} else {
+			size++
+		}
 	}
 	ch := make(chan error, size)
 	go func() {
