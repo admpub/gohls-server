@@ -1,7 +1,9 @@
 package hls
 
 import (
+	"database/sql"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -19,7 +21,17 @@ var (
 	//ComSkipINI comskip's ini file path
 	ComSkipINI  = ""
 	ComSkipPath = "comskip"
+
+	supportedFFProbe sql.NullBool
+	supportedFFMPEG  sql.NullBool
+	supportedComSkip sql.NullBool
 )
+
+func Reset() {
+	supportedFFProbe.Valid = false
+	supportedFFMPEG.Valid = false
+	supportedComSkip.Valid = false
+}
 
 const (
 	cacheDirName     = "cache"
@@ -35,17 +47,61 @@ func IsUnsupported(err error) bool {
 	return errors.Cause(err) == ErrUnsupported
 }
 
-func ConvertToMP4(videoFile string, outputFile string) error {
+func IsSupportedFFProbe() bool {
+	if supportedFFProbe.Valid {
+		return supportedFFProbe.Bool
+	}
+	supportedFFProbe.Valid = true
+	supportedFFProbe.Bool = false
+	if _, err := exec.LookPath(FFProbePath); err != nil {
+		return false
+	}
+	supportedFFProbe.Bool = true
+	return true
+}
+
+func IsSupportedFFMPEG() bool {
+	if supportedFFMPEG.Valid {
+		return supportedFFMPEG.Bool
+	}
+	supportedFFMPEG.Valid = true
+	supportedFFMPEG.Bool = false
 	if _, err := exec.LookPath(FFMPEGPath); err != nil {
+		return false
+	}
+	supportedFFMPEG.Bool = true
+	return true
+}
+
+func IsSupportedComSkip() bool {
+	if supportedComSkip.Valid {
+		return supportedComSkip.Bool
+	}
+	supportedComSkip.Valid = true
+	supportedComSkip.Bool = false
+	if len(ComSkipINI) == 0 {
+		return false
+	}
+	if _, err := os.Stat(ComSkipINI); err != nil {
+		log.Println(err)
+		return false
+	}
+	if _, err := exec.LookPath(ComSkipPath); err != nil {
+		return false
+	}
+	supportedComSkip.Bool = true
+	return true
+}
+
+func ConvertToMP4(videoFile string, outputFile string) error {
+	if !IsSupportedFFMPEG() {
 		return errors.WithMessage(ErrUnsupported, "Cannot find "+FFMPEGPath+" executable in path")
 	}
 	size := 1
-	if len(ComSkipINI) > 0 {
-		if _, err := exec.LookPath(ComSkipPath); err != nil {
-			fmt.Println("Cannot find " + ComSkipPath + " executable in path")
-		} else {
-			size++
-		}
+	if IsSupportedComSkip() {
+		size++
+	} else {
+		fmt.Println("Cannot find " + ComSkipPath + " executable in path")
 	}
 	ch := make(chan error, size)
 	go func() {

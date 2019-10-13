@@ -5,8 +5,11 @@ import (
 )
 
 var (
-	ConvertToMP4  = hls.ConvertToMP4
-	IsUnsupported = hls.IsUnsupported
+	ConvertToMP4       = hls.ConvertToMP4
+	IsUnsupported      = hls.IsUnsupported
+	IsSupportedFFProbe = hls.IsSupportedFFProbe
+	IsSupportedFFMPEG  = hls.IsSupportedFFMPEG
+	IsSupportedComSkip = hls.IsSupportedComSkip
 )
 
 func HomeDir() string {
@@ -21,6 +24,7 @@ func FFMPEGPath() string {
 func ComSkipINI() string {
 	return hls.ComSkipINI
 }
+
 func ComSkipPath() string {
 	return hls.ComSkipPath
 }
@@ -31,16 +35,20 @@ func SetHomeDir(homeDir string) {
 
 func SetFFProbePath(ffProbePath string) {
 	hls.FFProbePath = ffProbePath
+	hls.Reset()
 }
 
 func SetFFMPEGPath(ffMPEGPath string) {
 	hls.FFMPEGPath = ffMPEGPath
+	hls.Reset()
 }
 
 func SetComSkipINI(iniFile string) {
 	hls.ComSkipINI = iniFile
+	hls.Reset()
 }
 
 func SetComSkipPath(fpath string) {
 	hls.ComSkipPath = fpath
+	hls.Reset()
 }
