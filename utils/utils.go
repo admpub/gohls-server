@@ -4,7 +4,10 @@ import (
 	"github.com/admpub/gohls-server/internal/hls"
 )
 
-var ConvertToMP4 = hls.ConvertToMP4
+var (
+	ConvertToMP4  = hls.ConvertToMP4
+	IsUnsupported = hls.IsUnsupported
+)
 
 func HomeDir() string {
 	return hls.HomeDir
