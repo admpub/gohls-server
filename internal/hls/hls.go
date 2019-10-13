@@ -2,7 +2,6 @@ package hls
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -102,21 +101,27 @@ func ConvertToMP4(videoFile string, outputFile string) error {
 	if IsSupportedComSkip() {
 		size++
 	} else {
-		fmt.Println("Cannot find " + ComSkipPath + " executable in path")
+		log.Println("Cannot find " + ComSkipPath + " executable in path")
 	}
 	ch := make(chan error, size)
 	go func() {
 		args := []string{"-i", videoFile, "-acodec", "copy", "-vcodec", "copy", "-y", outputFile}
 		//ffmpeg -i index.ts -acodec copy -vcodec copy -y index.mp4
 		log.Println(FFMPEGPath, strings.Join(args, " "))
-		_, err := execute(FFMPEGPath, args)
+		res, err := execute(FFMPEGPath, args)
+		if len(res) > 0 {
+			log.Println(string(res))
+		}
 		ch <- err
 	}()
 	if size > 1 {
 		go func() {
 			args := []string{"-d", "255", "--ini=" + ComSkipINI, "--threads=" + strconv.Itoa(runtime.NumCPU()), "--hwassist", "-t", outputFile}
 			log.Println(ComSkipPath, strings.Join(args, " "))
-			_, err := execute(ComSkipPath, args)
+			res, err := execute(ComSkipPath, args)
+			if len(res) > 0 {
+				log.Println(string(res))
+			}
 			ch <- err
 		}()
 	}
