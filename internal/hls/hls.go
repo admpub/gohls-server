@@ -105,8 +105,8 @@ func ConvertToMP4(videoFile string, outputFile string) error {
 	}
 	ch := make(chan error, size)
 	go func() {
-		args := []string{"-i", videoFile, "-acodec", "copy", "-vcodec", "copy", outputFile}
-		//ffmpeg -i index.ts -acodec copy -vcodec copy index.mp4
+		args := []string{"-i", videoFile, "-acodec", "copy", "-vcodec", "copy", "-y", outputFile}
+		//ffmpeg -i index.ts -acodec copy -vcodec copy -y index.mp4
 		_, err := execute(FFMPEGPath, args)
 		ch <- err
 	}()
