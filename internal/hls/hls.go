@@ -31,9 +31,13 @@ func ClearCache() error {
 	return os.RemoveAll(cacheDir)
 }
 
+func IsUnsupported(err error) bool {
+	return errors.Cause(err) == ErrUnsupported
+}
+
 func ConvertToMP4(videoFile string, outputFile string) error {
 	if _, err := exec.LookPath(FFMPEGPath); err != nil {
-		return errors.New("Cannot find " + FFMPEGPath + " executable in path")
+		return errors.WithMessage(ErrUnsupported, "Cannot find "+FFMPEGPath+" executable in path")
 	}
 	size := 1
 	if len(ComSkipINI) > 0 {
