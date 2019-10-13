@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
+	"strings"
 
 	"github.com/admpub/errors"
 )
@@ -107,12 +108,14 @@ func ConvertToMP4(videoFile string, outputFile string) error {
 	go func() {
 		args := []string{"-i", videoFile, "-acodec", "copy", "-vcodec", "copy", "-y", outputFile}
 		//ffmpeg -i index.ts -acodec copy -vcodec copy -y index.mp4
+		log.Println(FFMPEGPath, strings.Join(args, " "))
 		_, err := execute(FFMPEGPath, args)
 		ch <- err
 	}()
 	if size > 1 {
 		go func() {
 			args := []string{"-d", "255", "--ini=" + ComSkipINI, "--threads=" + strconv.Itoa(runtime.NumCPU()), "--hwassist", "-t", outputFile}
+			log.Println(ComSkipPath, strings.Join(args, " "))
 			_, err := execute(ComSkipPath, args)
 			ch <- err
 		}()
