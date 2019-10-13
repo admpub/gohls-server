@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/admpub/gohls-server/internal/fileindex"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/admpub/gohls-server/internal/fileindex"
 )
 
 // Encodes a string like Javascript's encodeURIComponent()

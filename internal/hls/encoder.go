@@ -3,10 +3,11 @@ package hls
 import (
 	"crypto/sha1"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type EncodingRequest struct {

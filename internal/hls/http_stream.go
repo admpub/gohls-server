@@ -6,8 +6,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/admpub/gohls-server/internal/fileindex"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/admpub/gohls-server/internal/fileindex"
 )
 
 var streamRegexp = regexp.MustCompile(`^(.*)/([0-9]+)\.ts$`)

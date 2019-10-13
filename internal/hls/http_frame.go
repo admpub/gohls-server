@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/admpub/gohls-server/internal/fileindex"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/admpub/gohls-server/internal/fileindex"
 )
 
 type FrameHandler struct {

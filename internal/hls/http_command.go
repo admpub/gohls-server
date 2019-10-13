@@ -6,12 +6,13 @@ import (
 	"bufio"
 	"crypto/sha1"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"syscall"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func calculateCommandHash(cmd string, args []string) string {

@@ -1,9 +1,10 @@
 package hls
 
 import (
-	"github.com/admpub/gohls-server/internal/fileindex"
 	"net/http"
 	"path"
+
+	"github.com/admpub/gohls-server/internal/fileindex"
 )
 
 type InfoHandler struct {

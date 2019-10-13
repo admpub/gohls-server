@@ -3,10 +3,11 @@ package hls
 import (
 	"bytes"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"os/exec"
 	"syscall"
+
+	log "github.com/sirupsen/logrus"
 )
 
 func execute(cmdPath string, args []string) (data []byte, err error) {
