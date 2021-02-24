@@ -59,6 +59,6 @@ func (s *downloadHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	w.Header().Set("Content-Disposition", "attachment; filename='"+filepath.Base(dlfile)+"'")
+	w.Header().Set("Content-Disposition", "attachment; filename="+fmt.Sprintf("%q", filepath.Base(dlfile)))
 	http.ServeFile(w, r, dlfullpath)
 }
