@@ -1,7 +1,7 @@
 package buildinfo
 
 var (
-	VERSION    = "test"
-	COMMIT     = "16aaaa195a6a9296f47eb4312e5fc27fba06bcc2"
-	BUILD_TIME = "1642679884"
+	VERSION    = "v0.3.7"
+	COMMIT     = "45b74c5eccee1b6a994b040b43c7c1783d611dea"
+	BUILD_TIME = "1642680151"
 )
