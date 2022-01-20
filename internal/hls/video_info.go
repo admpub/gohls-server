@@ -91,7 +91,7 @@ func GetVideoInformation(path string) (*VideoInfo, error) {
 	}
 	info, jsonerr := GetFFMPEGJson(path)
 	if jsonerr != nil {
-		videoInfosLock.RLock()
+		videoInfosLock.Lock()
 		videoInfos[path] = nil
 		videoInfosLock.Unlock()
 		return nil, jsonerr
@@ -113,7 +113,7 @@ func GetVideoInformation(path string) (*VideoInfo, error) {
 		return nil, fmt.Errorf("Could not stat file '%v': %v", path, staterr)
 	}
 	var vi = &VideoInfo{duration, finfo.ModTime()}
-	videoInfosLock.RLock()
+	videoInfosLock.Lock()
 	videoInfos[path] = vi
 	videoInfosLock.Unlock()
 	return vi, nil
