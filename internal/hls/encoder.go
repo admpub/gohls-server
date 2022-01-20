@@ -2,6 +2,7 @@ package hls
 
 import (
 	"crypto/sha1"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -49,6 +50,8 @@ type Encoder struct {
 	reqChan  chan EncodingRequest
 }
 
+var ErrCreateCacheDir = errors.New("Could not create cache dir")
+
 func NewEncoder(cacheDir string, workerCount int) *Encoder {
 	rc := make(chan EncodingRequest, 100)
 	encoder := &Encoder{cacheDir, rc}
@@ -67,14 +70,14 @@ func NewEncoder(cacheDir string, workerCount int) *Encoder {
 			log.Debugf("Encoding %v:%v", r.file, r.segment)
 			data, err := execute(FFMPEGPath, EncodingArgs(r.file, r.segment, r.res))
 			if err != nil {
-				r.err <- err
+				r.sendError(err)
 				continue
 			}
 			r.sendData(&data)
 			tmp := encoder.GetCacheFile(r) + ".tmp"
 			mkerr := os.MkdirAll(filepath.Join(HomeDir, cacheDirName, encoder.cacheDir), 0777)
 			if mkerr != nil {
-				log.Errorf("Could not create cache dir")
+				r.sendError(ErrCreateCacheDir)
 				continue
 			}
 			if err2 := ioutil.WriteFile(tmp, data, 0777); err2 == nil {
