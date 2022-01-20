@@ -34,7 +34,7 @@ function make_release() {
 	echo $GOOS
 	echo $GOARCH
 	cat internal/buildinfo/buildinfo.go.in | sed "s/##VERSION##/${VERSION}/g" | sed "s/##COMMIT##/$(git rev-parse HEAD)/g" | sed "s/##BUILD_TIME##/$TIME/g" > internal/buildinfo/buildinfo.go
-	go build -trimpath -ldflags="-s -w -extldflags '-static'" -o $RELEASE_PATH/gohls${SUFFIX} *.go
+	go build -trimpath -ldflags="-s -w -extldflags '-static'" -o $RELEASE_PATH/gohls-$NAME${SUFFIX} *.go
 	PREV_WD=$(pwd)
 	cd  $RELEASE_PATH
 	tar cvfz ../$RELEASE_FILE .
