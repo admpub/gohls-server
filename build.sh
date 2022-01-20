@@ -1,1 +1,1 @@
-./scripts/prep_release.sh test
+./scripts/prep_release.sh v0.3.7
