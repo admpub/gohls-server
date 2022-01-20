@@ -79,11 +79,11 @@ func (s *HttpCommandHandler) ServeCommand(cmdPath string, args []string, key str
 	log.Debugf("Executing %v %v", cmdPath, args)
 	cmd := exec.Command(cmdPath, args...)
 	stdout, err := cmd.StdoutPipe()
-	defer stdout.Close()
 	if err != nil {
 		log.Errorf("Error opening stdout of command: %v", err)
 		return err
 	}
+	defer stdout.Close()
 	err = cmd.Start()
 	if err != nil {
 		log.Errorf("Error starting command: %v", err)
