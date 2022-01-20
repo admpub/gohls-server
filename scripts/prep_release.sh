@@ -21,6 +21,7 @@ function make_release() {
 	export GOOS=$2
 	export GOARCH=$3
 	SUFFIX=$4
+	export GOARM=$5
 	RELEASE_PATH=build/gohls-$NAME-${VERSION}
 	RELEASE_FILE=gohls-$NAME-${VERSION}.tar.gz
 	mkdir $RELEASE_PATH
@@ -39,4 +40,7 @@ function make_release() {
 make_release "osx" "darwin" "amd64" ""
 make_release "linux-386" "linux" "386" ""
 make_release "linux-amd64" "linux" "amd64" ""
+make_release "linux-arm64" "linux" "arm64" ""
+make_release "linux-arm6" "linux" "arm" "" "6"
+make_release "linux-arm64" "linux" "arm64" ""
 make_release "windows-amd64" "windows" "amd64" ".exe"
