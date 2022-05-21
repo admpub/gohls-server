@@ -10,10 +10,17 @@ import (
 )
 
 var tsFile string
+var version = `0.0.1`
+var showVer bool
 
 func main() {
 	flag.StringVar(&tsFile, `f`, ``, `-f demo.ts`)
+	flag.BoolVar(&showVer, `v`, false, `-v`)
 	flag.Parse()
+	if showVer {
+		fmt.Println(`v` + version)
+		return
+	}
 
 	if _, err := os.Stat(tsFile); err != nil {
 		fmt.Println(err)
