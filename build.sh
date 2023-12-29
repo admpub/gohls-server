@@ -1,1 +1,1 @@
-./scripts/prep_release.sh v0.3.7
+./scripts/prep_release.sh v0.3.8
