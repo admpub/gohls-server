@@ -3,12 +3,13 @@ package api
 import (
 	"bytes"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"mime"
 	"net/http"
 	"path"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type singleAssetHandler struct {

@@ -1,10 +1,11 @@
 package api
 
 import (
-	"github.com/admpub/gohls-server/internal/config"
-	"github.com/admpub/gohls-server/internal/hls"
 	"net/http"
 	"path"
+
+	"github.com/admpub/gohls-server/internal/config"
+	"github.com/admpub/gohls-server/internal/hls"
 )
 
 type foldersHandler struct {
@@ -19,9 +20,9 @@ func (s *foldersHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	videos := make([]*hls.ListResponseVideo, 0)
 	folders := make([]*hls.ListResponseFolder, 0)
 	parents := make([]*hls.ListResponseFolder, 0)
-	response := &hls.ListResponse{nil, "Home", "/", &parents, folders, videos}
+	response := &hls.ListResponse{Error: nil, Name: "Home", Path: "/", Parents: &parents, Folders: folders, Videos: videos}
 	for _, f := range s.conf.Folders {
-		folder := &hls.ListResponseFolder{f.Title, path.Join(r.URL.Path, f.Id)}
+		folder := &hls.ListResponseFolder{Name: f.Title, Path: path.Join(r.URL.Path, f.Id)}
 		folders = append(folders, folder)
 	}
 	response.Videos = videos

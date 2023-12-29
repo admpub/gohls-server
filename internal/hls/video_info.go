@@ -96,7 +96,7 @@ func GetVideoInformation(path string) (*VideoInfo, error) {
 		videoInfosLock.Unlock()
 		return nil, jsonerr
 	}
-	log.Debugf("ffprobe for %v returned", path, info)
+	log.Debugf("ffprobe for %v returned %+v", path, info)
 	if _, ok := info["format"]; !ok {
 		return nil, fmt.Errorf("ffprobe data for '%v' does not contain format info", path)
 	}
@@ -106,7 +106,7 @@ func GetVideoInformation(path string) (*VideoInfo, error) {
 	}
 	duration, perr := strconv.ParseFloat(format["duration"].(string), 64)
 	if perr != nil {
-		return nil, fmt.Errorf("Could not parse duration (%v) of '%v': %v", format["duration"].(string), path, perr)
+		return nil, fmt.Errorf("Could not parse duration (%v) of '%v': %v", format["duration"], path, perr)
 	}
 	finfo, staterr := os.Stat(path)
 	if staterr != nil {

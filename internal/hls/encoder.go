@@ -4,7 +4,6 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
@@ -80,7 +79,7 @@ func NewEncoder(cacheDir string, workerCount int) *Encoder {
 				r.sendError(ErrCreateCacheDir)
 				continue
 			}
-			if err2 := ioutil.WriteFile(tmp, data, 0777); err2 == nil {
+			if err2 := os.WriteFile(tmp, data, 0777); err2 == nil {
 				os.Rename(tmp, encoder.GetCacheFile(r))
 			}
 		}
@@ -101,7 +100,7 @@ func (e *Encoder) GetFromCache(r EncodingRequest) ([]byte, error) {
 		return nil, fmt.Errorf("Encoder cache file %v could not be opened because: %v", cachePath, err)
 	}
 	// The file could be opened, read it's content
-	dat, err := ioutil.ReadFile(cachePath)
+	dat, err := os.ReadFile(cachePath)
 	if err != nil {
 		return nil, fmt.Errorf("Encoder could not read cache file %v because: %v", cachePath, err)
 	}

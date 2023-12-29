@@ -3,7 +3,7 @@ package cmd
 import (
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 	"strconv"
 
 	"github.com/admpub/gohls-server/internal/hls"
@@ -16,9 +16,6 @@ func init_hls() {
 	log.SetLevel(log.InfoLevel)
 	if _, err := strconv.ParseBool(os.Getenv("DEBUG")); err == nil {
 		log.SetLevel(log.DebugLevel)
-	}
-	if _, err := strconv.ParseBool(os.Getenv("TRACE")); err == nil {
-		//log.SetLevel(log.TraceLevel)
 	}
 
 	// Find ffmpeg
@@ -41,5 +38,5 @@ func init_hls() {
 	// Configure HLS module
 	hls.FFMPEGPath = ffmpeg
 	hls.FFProbePath = ffprobe
-	hls.HomeDir = path.Join(homeDir, ".gohls")
+	hls.HomeDir = filepath.Join(homeDir, ".gohls")
 }

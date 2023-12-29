@@ -1,11 +1,12 @@
 package api
 
 import (
+	"net/http"
+
 	"github.com/admpub/gohls-server/internal/config"
 	"github.com/admpub/gohls-server/internal/fileindex"
 	"github.com/admpub/gohls-server/internal/hls"
 	log "github.com/sirupsen/logrus"
-	"net/http"
 )
 
 func Setup(conf *config.Config) {

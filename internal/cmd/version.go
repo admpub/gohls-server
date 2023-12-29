@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/admpub/gohls-server/internal/buildinfo"
 	"github.com/spf13/cobra"
 )

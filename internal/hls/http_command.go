@@ -1,8 +1,6 @@
 package hls
 
 import (
-	"sync"
-	//"net/http"
 	"bufio"
 	"crypto/sha1"
 	"fmt"
@@ -10,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sync"
 	"syscall"
 
 	log "github.com/sirupsen/logrus"

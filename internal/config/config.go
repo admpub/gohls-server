@@ -2,8 +2,9 @@ package config
 
 import (
 	"encoding/json"
+	"os"
+
 	homedir "github.com/mitchellh/go-homedir"
-	"io/ioutil"
 )
 
 type Config struct {
@@ -17,7 +18,7 @@ type RootFolder struct {
 }
 
 func readConfig(path string) (*Config, error) {
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
