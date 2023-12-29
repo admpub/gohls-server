@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
+	"strings"
 
 	"github.com/admpub/gohls-server/internal/api"
 	"github.com/admpub/gohls-server/internal/config"
@@ -14,6 +15,7 @@ import (
 
 var (
 	listen string
+	port   int
 )
 
 var reNumber = regexp.MustCompile(`^[0-9]+$`)
@@ -21,6 +23,7 @@ var reNumber = regexp.MustCompile(`^[0-9]+$`)
 func init() {
 	rootCmd.AddCommand(serveCmd)
 	serveCmd.Flags().StringVarP(&listen, "listen", "l", "127.0.0.1:8080", "The address to listen on (default is 127.0.0.1:8080)")
+	serveCmd.Flags().IntVarP(&port, "port", "p", 0, "")
 }
 
 var serveCmd = &cobra.Command{
@@ -39,6 +42,9 @@ var serveCmd = &cobra.Command{
 
 		if reNumber.MatchString(listen) {
 			listen = `:` + listen
+		}
+		if port > 0 {
+			listen = fmt.Sprintf(`%s:%d`, listen[0:strings.LastIndex(listen, `:`)], port)
 		}
 
 		// Dump information to user
