@@ -110,7 +110,7 @@ func IsSupportedComSkip() bool {
 	return true
 }
 
-func ConvertToMP4(videoFile string, outputFile string) error {
+func ConvertToMP4(videoFile string, outputFile string, fmp4 ...bool) error {
 	if !IsSupportedFFMPEG() {
 		return errors.WithMessage(ErrUnsupported, "Cannot find "+FFMPEGPath+" executable in path")
 	}
@@ -122,7 +122,13 @@ func ConvertToMP4(videoFile string, outputFile string) error {
 	}
 	ch := make(chan error, size)
 	go func() {
-		args := []string{"-i", videoFile, "-acodec", "copy", "-vcodec", "copy", "-y", outputFile}
+		args := []string{"-i", videoFile, "-acodec", "copy", "-vcodec", "copy"}
+		if len(fmp4) > 0 && fmp4[0] {
+			args = append(args, "-g", "52", "-movflags", `frag_keyframe+empty_moov`)
+		} else {
+			args = append(args, "-movflags", `faststart`)
+		}
+		args = append(args, "-y", outputFile)
 		//ffmpeg -i index.ts -acodec copy -vcodec copy -y index.mp4
 		log.Println(FFMPEGPath, strings.Join(args, " "))
 		res, err := execute(FFMPEGPath, args)
