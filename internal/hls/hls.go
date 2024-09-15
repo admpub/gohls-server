@@ -1,6 +1,7 @@
 package hls
 
 import (
+	"bytes"
 	"database/sql"
 	"log"
 	"os"
@@ -122,7 +123,17 @@ func ConvertToMP4(videoFile string, outputFile string, fmp4 ...bool) error {
 	}
 	ch := make(chan error, size)
 	go func() {
-		args := []string{"-i", videoFile, "-acodec", "copy", "-vcodec", "copy"}
+		var hasUnsupported bool
+		var args []string
+		var res []byte
+		var err error
+	START:
+		args = []string{"-i", videoFile}
+		if hasUnsupported {
+			args = append(args, "-strict", "-2")
+		} else {
+			args = append(args, "-acodec", "copy", "-vcodec", "copy")
+		}
 		if len(fmp4) > 0 && fmp4[0] {
 			args = append(args, "-g", "52", "-movflags", `frag_keyframe+empty_moov`)
 		} else {
@@ -131,8 +142,16 @@ func ConvertToMP4(videoFile string, outputFile string, fmp4 ...bool) error {
 		args = append(args, "-y", outputFile)
 		//ffmpeg -i index.ts -acodec copy -vcodec copy -y index.mp4
 		log.Println(FFMPEGPath, strings.Join(args, " "))
-		res, err := execute(FFMPEGPath, args)
+		res, err = execute(FFMPEGPath, args)
 		if len(res) > 0 {
+			if err != nil {
+				if bytes.Contains(res, []byte(`codec not currently supported in container`)) {
+					if !hasUnsupported {
+						hasUnsupported = true
+						goto START
+					}
+				}
+			}
 			log.Println(string(res))
 		}
 		ch <- err
